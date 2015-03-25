@@ -1,0 +1,383 @@
+html, body, header, nav, div, h2, p, ul, li, form, img, a, input, textarea {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  /*font: inherit;*/
+  vertical-align:top;
+  background:transparent;
+} 
+
+/*@import url(http://fonts.googleapis.com/css?family=Crimson+Text|Gudea); /*Josefin+Slab:700*/
+
+html {
+	-ms-user-select: none; -moz-user-select: none; -webkit-user-select: none; user-select: none;
+	/*font-family: Arial, sans-serif;*/
+	font-family: 'Gudea', sans-serif;
+}
+p, a { -ms-user-select: text; -moz-user-select: text; -webkit-user-select: text; user-select: text; }
+body { min-width: 1024px; }
+
+::-moz-selection { color: white; background: black; }
+::selection 	 { color: white; background: black; }
+
+.clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+a  { text-decoration: none; color: #000; }
+p  { /*font-family: ArnoPro, serif;*/ font-family: 'Crimson Text', serif; line-height: 20px; }
+h2 { font-size: 40px; }
+
+header {
+	position: fixed;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	/*min-width: 1000px;*/
+	width: 100%;
+	text-align: center;
+
+	z-index: 999;
+
+	transition: all 0.2s;
+
+	background: rgba(32,0,32,0.7);
+}
+
+.top {
+	background: none;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.top nav a {
+	margin-top: 80px;
+}
+
+nav a {
+	color: white;
+	text-transform: uppercase;
+	text-shadow: 1px 1px 2px #888;
+
+	display: inline-block;
+	min-width: 104px;
+	/*width: 19%;*/
+	margin: 0 3vw;
+	height: 38px;
+	padding-top: 20px;
+	
+
+	background: url('imgs/buton.png') center no-repeat;
+}
+
+nav a:hover  { color: #444; }
+nav a.active { color: black; }
+/*
+div[id='#despre_noi']:target {
+	background: red;
+}*/
+
+
+#logo { 
+	background: url('imgs/logo2.png') center no-repeat; 
+	font-size: 0;
+	margin-top: 0;
+	width: 142px;
+	height: 48px;
+}
+
+#logo.bg_logo {
+	background: url('imgs/logo.png') center no-repeat; 
+	width: 283px;
+	height: 154px;
+}
+
+.pagina {
+	width: 		100%;
+	min-height: 700px;
+	height: 	1080px;
+	height: 	100vh;
+
+	text-align: center;
+	/*box-shadow: 0px 16px 32px rgba(255,0,0,0.9);*/
+}
+
+.spatiu {
+	min-height: 80px;
+	height: 18vh;
+}
+
+#home_menu_placeholder {
+	position: relative;
+	top: 400px;
+}
+
+#home {	
+	background: url('imgs/bgN2.jpg') no-repeat;
+}
+
+#despre_noi {	
+	color: white;
+	min-height: 800px;
+	background: #014630 url('imgs/despre_noi_stanga.png') no-repeat left bottom;
+}
+
+.stanga {
+	float: left;
+	vertical-align: baseline;
+}
+
+.dreapta {
+	float: right;
+	vertical-align: top;
+}
+
+#img_dreapta {
+	min-height: 800px;
+	height: 	100vh;
+	background: url('imgs/despre_noi_dreapta.png') no-repeat right bottom; 
+}
+
+#despre_noi_centru {
+	margin: auto;
+	width: 500px;
+	padding-left: 120px;
+	padding-right: 120px;
+	height: 610px;
+	background: url('imgs/despre_noi_center_bg.png') no-repeat;
+	display: inline-block;
+}
+
+#despre_noi_centru h2 {
+	padding-top: 28px;
+	padding-bottom: 100px;
+}
+
+#prod {
+	background: #EECD87;
+}
+
+#galerie > * {
+	width: 435px;
+	display: inline-block;
+}
+
+#poze_prod h2 {
+	width: 393px;
+	height: 83px;
+	margin-left: 21px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+
+	display: block;
+	background: url('imgs/header_bg.png') no-repeat; 
+}
+
+#imgs {
+	height: 218px;
+	overflow: hidden;
+}
+
+#imgs img { 
+	height: 0; 
+	opacity: 0; 
+	-webkit-transition: opacity 0.3s ease-out;
+	transition: opacity 0.3s ease-out;
+}
+
+#imgs img.prod_active {
+	width: 435px;
+	height: 218px;
+	opacity: 1;
+}
+
+.thumbs_but {
+	/*width: 16px;*/
+	display: inline-block;
+	position: relative;
+	top: 50px;
+}
+
+.flip {
+	-moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+#thumbs {
+	display: inline-block;
+	padding-top: 20px;
+	width: 380px;
+	height: 140px;
+	overflow: hidden;
+}
+
+#thumbs_cont {
+	width: 870px;
+	height: 140px;
+	text-align: left;
+	position: relative;
+	left: 120px;
+}
+
+#thumbs_cont li {
+	display: inline-block;
+	padding-right: 10px;
+}
+
+#thumbs_cont img 			 { width: 100px; }
+#thumbs_cont img.prod_active { width: 140px; }
+
+#descriere li 				 { display: none; }
+#descriere li.prod_active    { display: block; height: 318px; }
+
+#descriere { 
+	margin-left: 8vw; 
+	padding-top: 50px; 
+	text-align: center; 
+}
+
+#descriere h2 {
+	color: white;
+	background: url('imgs/spicu.png') top center no-repeat;
+	padding-top: 29px;
+	padding-bottom: 29px;
+	font-size: 35px;
+	/*font-family: ArnoPro, serif;*/
+	font-family: 'Crimson Text', serif;
+}
+
+.descriere_text {
+	width: 393px;
+	height: 300px;
+	padding-left: 21px;
+	padding-right: 21px;
+	background: url('imgs/prods2.png') center no-repeat;
+	/*font-family: ArnoPro, serif;*/
+	font-family: 'Crimson Text', serif;
+}
+
+#descriere p {
+	padding-top: 50px;	
+}
+
+#parteneri {
+	background: #B57C3B url('imgs/masina.png') no-repeat right bottom;
+}
+
+#parteneri_stanga {
+	display: inline-block;
+	width: 500px;
+}
+
+#parteneri_stanga img {
+	margin: 10px;
+}
+
+#parteneri_dreapta {
+	display: inline-block;
+	width: 393px;
+	height: 113px;
+	margin-top: 100px;
+	background: url('imgs/header_bg.png') no-repeat;
+
+	font-size: 40px;
+}
+
+#parteneri_dreapta h2 {
+	padding-top: 30px;
+}
+
+#contact {
+	background: #F05943;
+	color: white;
+}
+
+#contact h2 {
+	display: inline-block;
+	
+	width: 347px;
+	height: 215px;
+	padding-top: 30px;
+	padding-left: 12px;
+
+	background: url('imgs/header_bg_contact.png') no-repeat;
+}
+
+#form {
+	display: inline-block;
+	width: 215px;
+
+	border: 1px dashed #444;
+	padding: 10px;
+
+	/*font-family: ArnoPro, serif;*/
+	font-family: 'Crimson Text', serif;
+}
+
+#form input, #form textarea {
+	width: 200px;
+	background: #fbdb95;
+	border: 1px solid #444;
+}
+
+#harta {
+	display: inline-block;
+	border: 2px solid #444;
+
+	margin-left: 2vw;
+	padding: 3px;
+}
+
+#contact_dreapta {
+	display: inline-block;
+	width: 240px;
+	height: 240px;
+	margin-top: 30px;
+	padding-top: 30px;
+	margin-left: 2vw;
+
+	background: url('imgs/contact_dreapta.png') no-repeat;
+}
+
+button {
+	margin-top: 15px;
+	color: white;
+	background: #222;
+	border: none;
+	padding: 3px 8px;
+	/*font-family: ArnoPro, serif;*/
+	font-family: 'Crimson Text', serif;
+	font-size: 14px;
+}
+
+button:hover {
+	background: #333;
+}
+
+button:active {
+	background: #444;
+	outline: 
+}
+
+footer {
+	width: 50%;
+	height: 27px;
+	padding-top: 8px;
+
+	position: fixed;
+	left: 25%;
+	margin: 0 auto;
+	bottom: 4px;
+	
+	background: url('imgs/footer.png') center center;
+	text-align: center;
+}
+
+footer p {
+	/*font-family: 'Josefin Slab', Arial, sans-serif;*/
+	font-family: Gudea, Arial, sans;
+	font-weight: 700;
+	font-size: 16px;
+}

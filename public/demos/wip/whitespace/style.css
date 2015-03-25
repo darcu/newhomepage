@@ -1,0 +1,136 @@
+/*
+===================================
+  resets and prep 
+===================================
+*/
+
+html, body, div, h3, p, ul, li, form, img, p, a {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  font:inherit;
+  vertical-align:baseline;
+  background:transparent;
+  border-image-width: 0;
+}
+
+html, body {
+	height: 100%;	
+}
+
+html {
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+p, a, .selectable {
+  -ms-user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  user-select: text;  
+}
+
+img, video, object, embed { max-width: 100%; height: auto; }
+
+ol, ul {
+  list-style: none;
+}
+
+::-moz-selection { color: #fff; background: rgba(16,16,16,0.9); }
+::selection    { color: #fff; background: rgba(16,16,16,0.9); }
+
+.clearfix {
+  clear: both;
+}
+
+
+/* Cansei de Ser Sexy */
+
+html, body {
+	/*height: 100%;*/
+    overflow: hidden;
+}
+
+nav {
+	position: fixed;
+	left: 40px;
+	bottom: 80px;
+
+	width: 150px;
+	padding: 10px;
+
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    text-align: justify;
+}
+
+nav a {
+	display: block;
+    
+    color: black;
+    text-decoration: none;
+
+    margin-left: 40px;
+}
+
+nav a:hover {
+	text-decoration: underline;
+}
+
+#imajboxxob {
+	padding-top: 100px;
+
+	white-space: nowrap;
+	position: absolute;
+	left: 0;
+
+	/*transition: left 0.5s ease-out;*/
+}
+
+.imajbox {
+	width: 400px;
+	margin-left: 40px;
+	display: inline-block;
+	vertical-align: top;
+
+	position: relative;
+	top: 0;
+
+	transition: top 0.2s ease-out;
+	filter: url(gray.svg#grayscale);
+	filter: gray;
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	filter: grayscale(100%);
+}
+
+img { border-radius: 8px; }
+
+.active {
+	-webkit-filter: none;
+	-moz-filter: none;
+	filter: none;
+	text-decoration: underline;
+	width: auto;
+}
+.active img {
+	height: calc(100vh - 375px);
+}
+
+.hoverfx {
+	top: -5px;
+	-webkit-filter: none;
+	-moz-filter: none;
+	filter: none;
+}
+
+.imajbox:hover {
+	top: -5px;
+	-webkit-filter: none;
+	-moz-filter: none;
+	filter: none;	
+}

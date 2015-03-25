@@ -9,23 +9,13 @@ html
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		meta(http-equiv="X-UA-Compatible" content="IE=edge")
 
-		title= title || 'darcu.net'
+		title= title || 'Awesome website on the internet'
 		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
-
-		//- Customise the stylesheet for your site by editing /public/styles/site.less
-		//- All .less files will be automatically compiled and minified in production.
 		link(href="/styles/site.min.css", rel="stylesheet")
 
 		//- This file provides the default styling for the KeystoneJS Content Editor
 		if user && user.canAccessKeystone
 			link(href="/keystone/styles/content/editor.min.css", rel="stylesheet")
-
-		//- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-		//- Safely remove this block if you are not targeting IE8
-		//-[if lt IE 9]
-			script(src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
-			script(src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
-		//-[endif]
 
 		//- Include template-specific stylesheets by extending the css block
 		block css
@@ -37,12 +27,12 @@ html
 	body
 
 		//- HEADER
-		#header: .container
+		#header: .container(class=(section === 'home' ? 'landing_page' : ''))
 
 			//- Customise your site's navigation by changing the navLinks Array in ./routes/middleware.js
 			//- ... or completely change this header to suit your design.
 
-			div(role="navigation").navbar.navbar-default
+			div(role="navigation").navbar.navbar-default.navbar-fixed-top
 				.container-fluid
 					.navbar-header
 						button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
@@ -50,15 +40,17 @@ html
 							span.icon-bar
 							span.icon-bar
 							span.icon-bar
-						a.navbar-brand(href='/') darcu.net
+						//- a.navbar-brand(href='/' class=(section === 'home' ? 'active' : '')) darcu.net
+						a.navbar-brand(href='/')
+							span.glyphicon.glyphicon-home
 					.collapse.navbar-collapse
-						ul.nav.navbar-nav.navbar-left
-							each link in navLinks
-								li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
+						//- ul.nav.navbar-nav.navbar-left
 						ul.nav.navbar-nav.navbar-right
+							each link in navLinks
+								li(class=(section == link.key ? 'active ' : '') + link.label): a(href=link.href)= link.label
 							if user
 								if user.canAccessKeystone
-									li: a(href='/keystone') Open Keystone
+									li: a(href='/keystone') Admin
 								li: a(href='/keystone/signout') Sign Out
 							else
 								li: a(href='/keystone/signin') Sign In
@@ -85,7 +77,7 @@ html
 		.container: #footer
 
 			//- You don't _have_ to include a link saying your site is powered by KeystoneJS, but we appreciate it!
-			p Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.
+			p darcu.net - Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.
 
 
 		//- JAVASCRIPT
@@ -97,7 +89,7 @@ html
 
 		//- Customise which Bootstrap javascript files are served by including
 		//- them specifically here, instead of bootstrap-3.2.0.min.js
-		script(src='/js/lib/bootstrap/bootstrap-3.2.0.min.js')
+		//- script(src='/js/lib/bootstrap/bootstrap-3.2.0.min.js')
 
 		//- The KeystoneJS Content Editor provides support for ks-editable data attributes,
 		//- which generate links to edit content for users who can access Keystone
