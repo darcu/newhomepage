@@ -11,7 +11,7 @@ exports.initLocals = function(req, res, next) {
 	
 	locals.navLinks = [
 		// { label: 'Home',		key: 'home',		href: '/' },
-		{ label: 'Blog',		key: 'blog',		href: '/blog' },
+		{ label: 'Blog',		key: 'blog',		href: '/' },
 		{ label: 'Portfolio',	key: 'portfolio',	href: '/portfolio' },
 		{ label: 'Tuber',		key: 'tuber',		href: 'https://tuber.darcu.net' }
 	];
