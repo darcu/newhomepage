@@ -1,5 +1,164 @@
-#header {
-	margin-top: 30px;
+/* navbar */
+@bgColor		: #F8F3E8;
+@linkColor		: @bgHighlight;
+
+// @bgDefault      : #337e7b;
+// @bgHighlight    : #5b9392;
+// @colDefault     : #77a19b;
+// @colHighlight   : #a3bdb7;
+@bgDefault      : #11163B;
+@bgHighlight    : #152F64;
+@colDefault     : #62859C;
+@colHighlight   : #D1E9EE;
+@dropDown       : false;
+.ddm() when (@dropDown) {
+  > .dropdown-menu {
+    background-color: @bgDefault;
+    > li > a {
+      color: @colDefault;
+      &:hover,  &:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight; }}
+    .divider {
+      background-color: @bgHighlight; }}}
+.navbar-default {
+  background-color: @bgDefault;
+  border-color: @bgHighlight;
+  .navbar-brand {
+    color: @colDefault;
+    &.active {
+    	color: @colHighlight;
+    	background-color: @bgHighlight; }
+    &:hover, &:focus { 
+      color: @colHighlight; }}
+  .navbar-text {
+    color: @colDefault; }
+  .navbar-nav {
+    > li {
+      > a {
+        color: @colDefault;
+        &:hover,  &:focus {
+          color: @colHighlight; }}
+      .ddm }
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight; }}
+    > .open {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight; }}}
+  .navbar-toggle {
+    border-color: @bgHighlight;
+    &:hover, &:focus {
+      background-color: @bgHighlight; }
+    .icon-bar {
+      background-color: @colDefault; }}
+  .navbar-collapse,
+  .navbar-form {
+    border-color: @colDefault; }
+  .navbar-link {
+    color: @colDefault;
+    &:hover {
+      color: @colHighlight; }}}
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: @colDefault;
+      &:hover, &:focus {
+        color: @colHighlight; }}
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight; }}}
+}
+
+.landing_page {
+	@bgLand      : transparent;
+	@bgLandHighlight    : transparent;
+	@colLand     : #FFFFFF;
+	@colLandHighlight   : #FFFFFF;
+	@dropDown       : false;
+	.ddm() when (@dropDown) {
+	  > .dropdown-menu {
+	    background-color: @bgLand;
+	    > li > a {
+	      color: @colLand;
+	      &:hover,  &:focus {
+	        color: @colLandHighlight;
+	        background-color: @bgLandHighlight; }}
+	    .divider {
+	      background-color: @bgLandHighlight; }}}
+
+	.navbar-default {
+	  background-color: @bgLand;
+	  border-color: @bgLandHighlight;
+	  .navbar-brand {
+	    color: @colLand;
+	    &.active {
+	    	color: @colLandHighlight;
+	    	background-color: @bgLandHighlight; }
+	    &:hover, &:focus { 
+	      color: @colLandHighlight; }}
+	  .navbar-text {
+	    color: @colLand; }
+	  .navbar-nav {
+	    > li {
+	      > a {
+	        color: @colLand;
+	        &:hover,  &:focus {
+	          color: @colLandHighlight; }}
+	      .ddm }
+	    > .active {
+	      > a, > a:hover, > a:focus {
+	        color: @colLandHighlight;
+	        background-color: @bgLandHighlight; }}
+	    > .open {
+	      > a, > a:hover, > a:focus {
+	        color: @colLandHighlight;
+	        background-color: @bgLandHighlight; }}}
+	  .navbar-toggle {
+	    border-color: @bgLandHighlight;
+	    &:hover, &:focus {
+	      background-color: @bgLandHighlight; }
+	    .icon-bar {
+	      background-color: @colLand; }}
+	  .navbar-collapse,
+	  .navbar-form {
+	    border-color: @colLand; }
+	  .navbar-link {
+	    color: @colLand;
+	    &:hover {
+	      color: @colLandHighlight; }}}
+	@media (max-width: 767px) {
+	  .navbar-default .navbar-nav .open .dropdown-menu {
+	    > li > a {
+	      color: @colLand;
+	      &:hover, &:focus {
+	        color: @colLandHighlight; }}
+	    > .active {
+	      > a, > a:hover, > a:focus {
+	        color: @colLandHighlight;
+	        background-color: @bgLandHighlight; }}}
+	}
+}
+
+/* button */
+.btn {
+  // .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+  .button-variant(@colHighlight; @bgHighlight; @bgDefault);
+}
+
+/* custom shit */
+// http://www.colourlovers.com/palette/3688853/Timid_Spring
+
+body {
+	// padding-top: 50px;
+	background-color: @bgColor;
+
+	a {
+		color: @linkColor;
+	}
 }
 
 #footer {
@@ -9,8 +168,12 @@
 	color: @gray-light;
 }
 
-.gallery-image img{
-    display: block;
-    max-width: 100%;
-    height: auto;
+// .gallery-image img{
+//     display: block;
+//     max-width: 100%;
+//     height: auto;
+// }
+
+#footer {
+	font-size: 10px;
 }

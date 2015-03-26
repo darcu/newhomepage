@@ -1,0 +1,204 @@
+/*  ===================================
+          resets and prep 
+    ===================================  */
+
+html, body, div, h3, p, ul, li, form, img 
+                  { margin:0; padding:0; border:0; outline:0; font-size:100%; font:inherit; vertical-align:baseline; background:transparent; }
+html, body        { height: 100%; }
+html              { -ms-user-select: none; -moz-user-select: none; -webkit-user-select: none; user-select: none; }
+p, a, .selectable { -ms-user-select: text; -moz-user-select: text; -webkit-user-select: text; user-select: text; }
+ol, ul            { list-style: none; }
+::-moz-selection  { color: #fff; background: rgba(16,16,16,0.9); }
+::selection 	    { color: #fff; background: rgba(16,16,16,0.9); }
+.clearfix         { clear: both; }
+
+/*  ===================================
+          style
+    ===================================  */
+
+/*
+pallete
+  peach dusting 
+    FBC599 
+    rgb(251,197,153)
+
+  sandyellow
+    CDBB93
+    205,187,147
+
+  imagination
+    9EAE8A
+    158,174,138
+
+  pending
+    335650
+    51,86,80
+
+  peach
+    F35F55
+    243,95,85
+
+
+
+  Snowflakes melting
+    RGB: 170, 179, 171<br />
+    Hex: AAB3AB
+
+  The steam of hot
+    RGB: 196, 203, 183
+    Hex: C4CBB7
+
+  cocoa
+    RGB: 235, 239, 201
+    Hex: EBEFC9
+
+  As I look into your
+    RGB: 238, 224, 183
+    Hex: EEE0B7
+
+  Eyes and smile.
+    RGB: 232, 202, 175
+    Hex: E8CAAF
+
+*/
+
+#wrapper {
+  margin-top: 300px;
+}
+
+#heather {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+
+  width: 100%;
+  height: 295px;
+
+  /*background: #F35F55;*/
+  background:
+    radial-gradient(circle at 0% 50%, rgba(243, 95, 85, 0) 9px, #f3766d 10px, rgba(243, 95, 85, 0) 11px) 0px 10px,
+    radial-gradient(at 100% 100%,     rgba(243, 95, 85, 0) 9px, #f3766d 10px, rgba(243, 95, 85, 0) 11px),
+    #F35F55;
+
+  background-size: 20px 20px;
+  border-top: 5px solid #444;
+  text-align: center;
+}
+
+#logowrap {
+  margin-top: 85px;
+}
+
+#logo {
+  color: #fff;
+  font-family: 'Sonsie One', cursive;
+  font-size: 72px;
+  text-shadow: 3px 3px 2px #422;
+  text-decoration: none;
+}
+
+#subtext {
+  margin-top: 20px;
+
+  color: #422;
+  font-family: 'Carrois Gothic SC', sans-serif;
+  font-size: 48px;
+  text-decoration: none;
+}
+
+.shill {
+  height: 300px;
+}
+
+#menu {
+  background: #335650;
+  box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  /*z-index: 1;*/
+
+  width: 100%;
+  height: 60px;
+  text-align: center;
+
+  /*position: relative;*/
+}
+
+.sticky {
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:1000;
+}
+
+
+#menu li {
+  /*float: left;*/
+  display: inline-block;
+  height: 60px;
+
+  /*padding: 25px 30px 24px;  */
+}
+
+#menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 24px;
+  font-family: 'Carrois Gothic SC', sans-serif;
+
+  position: relative;
+  top:15px;
+  padding: 15px 30px 16px;  
+}
+
+#menu a:hover {
+  /*background: #436660;*/
+  background: rgba(0,0,0,0.2);
+  /*box-shadow: inset 0 0 2px rgba(0,0,0,0.2);*/
+}
+
+#inner1 {
+  background: #EBEFC9;
+}
+
+#inner2 {
+  background: #EEE0B7;
+}
+
+#inner3 {
+  background: #9EAE8A;
+      background: 
+    radial-gradient(circle at 100% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent),
+    radial-gradient(circle at 0% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent) 0 -50px;
+  background-color: slategray;
+  background-size:75px 100px;
+}
+
+#inner4 {
+  background: #FBC599;
+}
+
+#inner5 {
+  background: #C4CBB7;
+}
+
+#inner6 {
+  background: #AAB3AB;
+        background-image: linear-gradient(90deg, rgba(255,255,255,.07) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(255,255,255,.13) 50%, transparent 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.17) 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.19) 50%);
+    background-size: 13px, 29px, 37px, 53px;
+}
+
+#inner7 {
+  background: #CDBB93;
+}
+
+#inner8 {
+  background: #E8CAAF;
+}
+
+.inner {
+  min-height: 400px;
+}
+
+

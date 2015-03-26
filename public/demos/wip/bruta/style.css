@@ -1,0 +1,190 @@
+/*  ===================================
+          resets and prep 
+    ===================================  */
+
+html, body, div, h3, p, ul, li, form, img {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  font:inherit;
+  vertical-align:baseline;
+  background:transparent;
+}
+
+html, body { height: 100%; }
+
+html {
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+p, a, .selectable {
+	-ms-user-select: text;
+	-moz-user-select: text;
+	-webkit-user-select: text;
+	user-select: text;	
+}
+
+ol, ul { list-style: none; }
+
+::-moz-selection { color: #fff; background: rgba(16,16,16,0.9); }
+::selection 	 { color: #fff; background: rgba(16,16,16,0.9); }
+
+.clearfix { clear: both; }
+
+/*  ===================================
+          style
+    ===================================  */
+
+body { background: url('bgC.jpg') no-repeat; }
+
+#headwrap {
+  /*height: 400px;*/
+  
+}
+
+#heather {
+  width: 100%; 
+  position: fixed; top: 0; z-index: 1;
+  /*background: rgba(243,95,85,0.4); */
+  /*background: url("header.png") no-repeat;*/
+  text-align: center;
+
+  /*overflow: hidden;*/
+}
+
+#headerbg {
+  /*overflow: hidden;*/
+  position: relative;
+  height: 138px;
+}
+
+/*.sticky { position:fixed; z-index:1000; }*/
+
+#logo {
+  position: relative;
+  top: -138px;
+}
+
+#menu li.spic { border: none; }
+
+#menu { 
+    position: relative;
+    top: -138px;
+    width: 700px;
+  /*background: rgba(95, 243,85,0.4);*/
+}
+
+
+#menu li {
+  display: inline-block;
+
+  margin: 10px;
+  margin-top: 5px;
+  padding: 27px 2px 27px;
+
+  border: 1px solid #fff;
+  border-radius: 2px;
+
+}
+
+#menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 28px;
+  font-family: serif;
+
+  padding: 25px 15px 25px;  
+
+  border: 1px dotted #fff;
+  border-radius: 2px;
+}
+
+#menu a:hover {
+
+}
+
+
+
+
+
+
+#nav2 {
+  margin-top: 450px;
+  text-align: center;
+}
+
+#nav2 li {
+  display: inline-block;
+}
+
+.cerc {
+  border: 2px dashed #fff;
+  border-radius: 67.5px;
+
+  margin: 5px;
+
+  background: rgba(255,255,255,0.2);
+
+  display: block;
+
+  width: 125px;
+  height: 125px;
+
+}
+
+.cerc img {
+  margin-top: 40px;
+}
+
+
+.inner {
+  min-height: 1400px;
+}
+
+
+/*#inner1 {
+  background: #EBEFC9;
+}
+
+#inner2 {
+  background: #EEE0B7;
+}
+
+#inner3 {
+  background: #9EAE8A;
+}
+
+#inner4 {
+  background: #FBC599;
+}
+
+#inner5 {
+  background: #C4CBB7;
+}
+
+#inner6 {
+  background: #AAB3AB;
+}
+
+#inner7 {
+  background: #CDBB93;
+}
+
+#inner8 {
+  background: #E8CAAF;
+}*/
+
+
+
+
+
+
+
+
+
+

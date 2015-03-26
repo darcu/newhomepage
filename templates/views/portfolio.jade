@@ -1,0 +1,129 @@
+extends ../layouts/default
+
+block head
+	//- Google fonts
+	link(href='http://fonts.googleapis.com/css?family=Alef|Squada+One|Days+One|Cuprum:400:700|Raleway:400,700', rel='stylesheet', type='text/css')
+
+block content
+	div.container
+		#PFmainwrap
+			.PFtitlerow Apps + Games
+			.PFrow
+				.PFtile
+					.PFtitle
+						p Soundcloud music player
+					.PFdescription
+						a(href='demos/wip/soundcloudapi')
+							img(src='thumbs/soundcloud.png')
+						ul
+							strong Streaming Music player experiment
+							li support for SoundCloud / Deezer API.
+							li responsive design / touch input.
+							li search and library support.
+				.PFtile
+					.PFtitle
+						p Calc
+					.PFdescription
+						a(href='demos/apps/calc')
+							img(src='thumbs/calc.png')
+						ul#calc
+							strong HTML5 / CSS3 calculator
+							li responsive design on mobile devices.
+							li button and keyboard input.
+							li custom text input handling:
+								ul
+								li &middot; rejects irrelevant characters.
+								li &middot; custom selection handling.
+								li &middot; input at any point in the string with cursor or keyboard selection.
+							li robust JavaScript expression parser.
+							li extended jQuery functions for custom input.
+				.PFtile
+					.PFtitle
+						p Minesweeper
+					.PFdescription
+						a(href='demos/jocuri/ms')
+							img(src='thumbs/mines.png')
+						ul
+							strong HTML5 Canvas / JavaScript Minesweeper
+							li drawing and animations in HTML5 Canvas.
+							li four difficulty levels.
+							li three themes.
+				.PFtile
+					.PFtitle
+						p Tetris
+					.PFdescription
+						a(href='demos/jocuri/quad')
+							img(src='thumbs/tetris.png')
+						ul
+							strong HTML5 Canvas / JavaScript Tetris
+							li drawing and animations in pure HTML5 Canvas.
+							li no texture images.
+							li gradual difficulty.
+							li exponential scoring.
+							li themes.
+							li custom keyboard input for smooth and precise movement.
+			.PFtitlerow Sites
+			.PFrow
+				.PFtile
+					.PFtitle
+						p Proiectare
+					.PFdescription
+						a(href='demos/wordpress/sait.zip')
+							img(src='thumbs/sait.jpg')
+						ul
+							strong Fully custom WordPress theme
+							li WordPress CMS.
+							li custom homepage.
+							li custom pages.
+							li custom post index.
+							li custom single post layout.
+							li tiled portfolio page.
+							li custom JavaScript sliders with dynamic resize.
+				.PFtile
+					.PFtitle
+						p Brutarie
+					.PFdescription
+						a(href='demos/sites/florisim')
+							img(src='thumbs/florisim.jpg')
+						ul
+							strong HTML5 / CSS3 single page site
+							li navigation animations.
+							li jQuery effects.
+							li sticky header.
+							li custom JavaScript product slider
+							li florisim.ro
+			.PFtitlerow Work in progress/Experiments
+			.PFrow
+				.PFtile
+					.PFtitle
+						p Warp Neun
+					.PFdescription
+						a(href='demos/wip/warpneun')
+							img(src='thumbs/warpneun.png')
+						ul
+							strong Sticky / Fixed element experiment
+							li sticky navigation menu on scroll with jQuery and CSS
+							li CSS3 pattern backgrounds
+				.PFtile
+					.PFtitle
+						p Whitespace
+					.PFdescription
+						a(href='demos/wip/whitespace')
+							img(src='thumbs/whitespace.png')
+						.PFlist
+							ul
+								strong jQuery positioning and scrolling experiment
+								li horizontal carousel movement with mouse scroll.
+								li CSS3 effects: oppacity, grayscale, transition.	
+								li jQuery CSS manipulation.
+				.PFtile
+					.PFtitle
+						p Haiduc
+					.PFdescription
+						a(href='demos/wip/haiducheather')
+							img(src='thumbs/haiduc.jpg')
+						ul
+							strong Summer Well 2013 experiment
+							li fixed header
+							li responsive background positioning with jQuery
+							li jQuery animated scroll
