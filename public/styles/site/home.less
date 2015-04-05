@@ -1,19 +1,100 @@
-.jumbotron {
-	background-color: transparent;
-}
+@bgLand      : transparent;
+@bgLandHighlight    : transparent;
+@colLand     : #FFFFFF;
+@colLandHighlight   : #FFFFFF;
+@dropDown       : false;
 
-.landing1 {
-	height: 80vh;
-	background: url('../images/index.jpg') no-repeat;
+.home {
+	// .ddm() when (@dropDown) {
+	//   > .dropdown-menu {
+	//     background-color: @bgLand;
+	//     > li > a {
+	//       color: @colLand;
+	//       &:hover,  &:focus {
+	//         color: @colLandHighlight;
+	//         background-color: @bgLandHighlight; }}
+	//     .divider {
+	//       background-color: @bgLandHighlight; }}}
 
-	h1 {
-		line-height: 600px;
-		margin: 0;
+	// .navbar-default {
+	//   background-color: @bgLand;
+	//   border-color: @bgLandHighlight;
+	//   .navbar-brand {
+	//     color: @colLand;
+	//     &.active {
+	//     	color: @colLandHighlight;
+	//     	background-color: @bgLandHighlight; }
+	//     &:hover, &:focus { 
+	//       color: @colLandHighlight; }}
+	//   .navbar-text {
+	//     color: @colLand; }
+	//   .navbar-nav {
+	//     > li {
+	//       > a {
+	//         color: @colLand;
+	//         &:hover,  &:focus {
+	//           color: @colLandHighlight; }}
+	//       .ddm }
+	//     > .active {
+	//       > a, > a:hover, > a:focus {
+	//         color: @colLandHighlight;
+	//         background-color: @bgLandHighlight; }}
+	//     > .open {
+	//       > a, > a:hover, > a:focus {
+	//         color: @colLandHighlight;
+	//         background-color: @bgLandHighlight; }}}
+	//   .navbar-toggle {
+	//     border-color: @bgLandHighlight;
+	//     &:hover, &:focus {
+	//       background-color: @bgLandHighlight; }
+	//     .icon-bar {
+	//       background-color: @colLand; }}
+	//   .navbar-collapse,
+	//   .navbar-form {
+	//     border-color: @colLand; }
+	//   .navbar-link {
+	//     color: @colLand;
+	//     &:hover {
+	//       color: @colLandHighlight; }}}
+	// @media (max-width: 767px) {
+	//   .navbar-default .navbar-nav .open .dropdown-menu {
+	//     > li > a {
+	//       color: @colLand;
+	//       &:hover, &:focus {
+	//         color: @colLandHighlight; }}
+	//     > .active {
+	//       > a, > a:hover, > a:focus {
+	//         color: @colLandHighlight;
+	//         background-color: @bgLandHighlight; }}}
+	// }
 
-		color: #FFFFFF;
-		font-size: 120px;
-		text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
-		
-		font-family: 'Raleway'
+	.jumbotron {
+		background-color: transparent;
+	}
+
+	section {
+		// height: 400px;
+		padding-top: 40px;
+
+	}
+
+	.landing1 {
+		font-family: 'Raleway';
+		// font-size: 
+		h1 {
+			line-height: 600px;
+			margin: 0;
+
+			color: #FFFFFF;
+			font-size: 120px;
+			text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+			
+			
+		}
+	}
+
+	.landing2 {
+		background-color: red;
 	}
 }
+
