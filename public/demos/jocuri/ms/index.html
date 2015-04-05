@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>PulMS</title>
+	<meta charset="UTF-8" /> 
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Squada+One:400,700,400italic,700italic&subset=latin,latin-ext">
 	<style type="text/css">
 		body {
 			text-align: center; height: 100%; 
@@ -15,23 +17,28 @@
 			background-size:80px 140px;
 			background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
 		}
-		#wrapper 	{ background-color: #eee; display: inline-block; margin: auto; margin-top: 30px; padding: 10px; box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.2); border-radius: 4px; }
-		input 		{ margin: 0; padding: 0; background-color: transparent; }
+		#wrapper 	{ min-width: 380px; background-color: #eee; display: inline-block; margin: auto; margin-top: 30px; box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.2); border-radius: 4px; }
+		canvas 		{ display: block; margin: 0 auto;}
+		.line		{ display: flex; justify-content: space-between; padding: 5px 20px; }
+		.box 		{ color: #888; border: 0px; outline: 0px; margin: 0px; padding: 0px; text-transform: uppercase; font-family: 'Squada One', sans-serif; font-size: 24px;	line-height: 40px; }
+		input 		{ margin: 0; padding: 0; background-color: rgba(0,0,0,0.1); border-radius: 4px; min-width: 110px; }
 		input:hover { color: #aaa; }
-		.box 		{ color: #888; border: 0px; margin: 0px; padding: 0px; float: left;	text-transform: uppercase; font-family: 'Squada One', sans-serif; font-size: 24px;	line-height: 40px; min-height: 40px; min-width: 105px; }
-		canvas 		{ display: block; margin: 5px auto; }
-		.clear 		{ clear: both; }
+		#time		{ width: 105px; text-align: left}
+		/*#time		{ float: right; }*/
 	</style>
 </head>
-<body onload="ini()">
+<body>
 	<div id="wrapper">
-		<div id="mines" class="box">Mines:</div>
-		<div id="time" class="box">Time: 00:00</div>
-		<input type="button" value="Restart" onclick="ini()" class="box"/>
-		<input type="button" id="diff" value="Easy" onclick="diff()" class="box"/>
-		<input type="button" id="theme" value="Darc" onclick="theme()" class="box"/>
-		<div class="clear"></div>
+		<div id="line1" class="line">
+			<div id="mines" class="box">Mines:</div>
+			<div id="time" class="box">Time: 00:00</div>
+		</div>
 		<canvas id="canvas" width="320" height="320">Canvas not supported. Loser!</canvas>
+		<div class="line">
+			<input type="button" id="restart" value="Restart" class="box"/>
+			<input type="button" id="diff" value="Easy" class="box"/>
+			<input type="button" id="theme" value="Darc" class="box"/>
+		</div>	
 	</div>
 	<script type="text/javascript" src="scripts/t2.js"></script>	
 </body>

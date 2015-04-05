@@ -1,16 +1,52 @@
-var _canvas = document.getElementById('canvas');
-var _canvasContext = null;
-var ga = 0.0;
-if( _canvas && _canvas.getContext ){
-	_canvasContext = _canvas.getContext('2d');			
-}
-else{
-	alert("");
-	//exit();
-}
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+ctx.font = '28px Squada One';
+
+var cfg = {
+	s: 32,
+	d: [{
+		title: 'Easy',
+		col: 9,
+		row: 9,
+		mines: 10
+	}, {
+		title: 'Medium',
+		col: 16,
+		row: 16,
+		mines: 40
+	}, {
+		title: 'Expert',
+		col: 30,
+		row: 16,
+		mines: 99
+	}, {
+		title: 'Epic',
+		col: 30,
+		row: 30,
+		mines: 250
+	}],
+	// difficulty index
+	di: 0,
+	// current difficulty
+	cd: {},
+	// bg theme
+	mt: ['#eee', '#3f51c1', '#286300', '#af090d', '#840284', '#040284', '#844204', '#848284', '#040204'],
+	// color theme
+	t: [{
+		title: 'Darc',
+		fgColor: '#aaa',
+		bgColor: '#444',
+		stColor: '#eee'
+	}],
+	// color theme index
+	ti: 0,
+	// current color theme
+	ct: {}
+};
 
 //cell object
-Cell = function () {
+var Cell = function() {
 	this.cx = 0;
 	this.cy = 0;
 	this.state = 1; //empty 0, cover 1, flag 2, question 3
@@ -18,398 +54,362 @@ Cell = function () {
 	this.minesNear = 0;
 }
 
-board = function() {
-	var col = 9;
-	var row = 9;
-	var mines = 10;
-	var flaggedMines = 0;
-	var end = 0;
-	var uncovered = 0;
-	var paddX = 0;
-	var paddY = 0;
-	
-	this.iniCells = function (){
-		paddY = (_canvas.height - (row*32))/2;
-		paddX = (_canvas.width - (col*32))/2;
-		
-		this.cell = [];
-		for(i=0; i<col; i++){
-			this.cell[i] = [row];
+var board = (function() {
+	var col;
+	var row;
+	var mines;
+	var flaggedMines;
+	var end;
+	var uncovered;
+	var paddX;
+	var paddY;
+	var cell;
+	var b = {};
+
+	var iniCells = function() {
+		paddX = (canvas.width - (col * cfg.s)) / 2;
+		paddY = (canvas.height - (row * cfg.s)) / 2;
+
+		cell = [];
+		for (i = 0; i < col; i++) {
+			cell[i] = [row];
 		}
-		for(i = 0; i < col; i++)
-		for(j = 0; j < row; j++){
-			this.cell[i][j] = new Cell();
-			this.cell[i][j].cx = i*32 + paddX;
-			this.cell[i][j].cy = j*32 + paddY;
-		}
+		for (i = 0; i < col; i++)
+			for (j = 0; j < row; j++) {
+				cell[i][j] = new Cell();
+				cell[i][j].cx = i * cfg.s + paddX;
+				cell[i][j].cy = j * cfg.s + paddY;
+			}
 	}
-	
-	this.ini = function(){
-		switch(difficulty){
-				case 0:
-						col = 9;
-						row = 9;
-						mines = 10;
-						break;
-				case 1:
-						col = 16;
-						row = 16;
-						mines = 40;
-						break;
-				case 2:
-						col = 30;
-						row = 16;
-						mines = 99;
-						break;
-				case 3:
-						col = 30;
-						row = 30;
-						mines = 250;
-						break;
-		}
-		
-		this.end = 0;
-		this.iniCells();
-		this.randMines();
-		this.countMines();
-		this.drawBoard();
-		document.getElementById("mines").innerHTML = "Mines " + (mines-flaggedMines);
-	};
-	this.randMines = function(){
+
+	var randMines = function() {
 		var minesToPlace = mines;
-		while(minesToPlace){
-			var px = Math.floor(Math.random()*col);
-			var py = Math.floor(Math.random()*row);
-			if(!(this.cell[px][py].mine)){
-				this.cell[px][py].mine = true;
+		while (minesToPlace) {
+			var px = Math.floor(Math.random() * col);
+			var py = Math.floor(Math.random() * row);
+			if (!(cell[px][py].mine)) {
+				cell[px][py].mine = true;
 				minesToPlace--;
 			}
 		}
 	};
-	this.countMines = function(){
-		for(i = 0; i < col; i++)
-		for(j = 0; j < row; j++){
-			if(!this.cell[i][j].mine){
-				for(a = Math.max(i-1, 0); a <= Math.min(i+1, col-1); a++)
-				    for(b = Math.max(j-1, 0); b <= Math.min(j+1, row-1); b++){
-					//console.log(a+" : "+b);
-					if(!(a == i && b == j)){
-						if(this.cell[a][b].mine == true){
-							this.cell[i][j].minesNear++;
+
+	var countMines = function() {
+		for (i = 0; i < col; i++)
+			for (j = 0; j < row; j++) {
+				if (!cell[i][j].mine) {
+					for (a = Math.max(i - 1, 0); a <= Math.min(i + 1, col - 1); a++)
+						for (b = Math.max(j - 1, 0); b <= Math.min(j + 1, row - 1); b++) {
+							if (!(a === i && b === j)) {
+								if (cell[a][b].mine === true) {
+									cell[i][j].minesNear++;
+								}
+							}
 						}
-					}
 				}
 			}
-		}	
 	};
-	this.drawBoard = function(){
-		//clear canvas
-		//canvas.width = canvas.width
-		_canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-		
-		_canvasContext.strokeStyle = "#aaa";
-		_canvasContext.strokeRect(paddX - 4, paddY - 4, _canvas.width - paddX*2 + 8, _canvas.height - paddY*2 + 8);
-		
-		for(i = 0; i < col; i++)
-		for(j = 0; j < row; j++){
-			this.drawCell(i, j);
-						
+
+	/*
+	args = {
+		text: '',
+		txColor: '',
+		fgColor: '',
+		bgColor: '',
+		stColor: ''
+	}
+	*/
+	var drawSquare = function(x, y, args) {
+		ctx.fillStyle = args.bgColor || '#eee';
+		ctx.fillRect(x, y, cfg.s, cfg.s);
+
+		if (args.bgColor && args.fgColor) {
+			// grad
+			// var grad = ctx.createLinearGradient(x, y, x + cfg.s, y + cfg.s);
+			var grad = ctx.createRadialGradient(x, y, cfg.s, x + cfg.s, y + cfg.s, cfg.s / 2);
+			grad.addColorStop(0, args.fgColor);
+			grad.addColorStop(1, args.bgColor);
+
+			ctx.fillStyle = grad;
+			ctx.fillRect(x, y, cfg.s, cfg.s);
+		}
+
+		if (args.stColor) {
+			ctx.strokeStyle = args.stColor;
+			ctx.strokeRect(x, y, cfg.s, cfg.s);
+		}
+
+		if (args.text) {
+			var w = ctx.measureText(args.text).width;
+			ctx.textBaseline = 'top';
+
+			ctx.fillStyle = args.txColor || '#eee';
+			ctx.fillText(args.text, x + (cfg.s - w) / 2, y + 2);
 		}
 	};
-	this.drawCell = function(dx, dy){
+
+	var drawCell = function(c) {
 		//is covered
-		if(this.cell[dx][dy].state == 1){
-			_canvasContext.drawImage(atlas, 32, 64, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
+		if (c.state === 1) {
+			// ctx.drawImage(atlas, cfg.s, 64, cfg.s, cfg.s, c.cx, c.cy, cfg.s, cfg.s);
+			drawSquare(c.cx, c.cy, cfg.ct);
 		}
 		//is flag
-		else if(this.cell[dx][dy].state == 2){
-			_canvasContext.drawImage(atlas, 64, 64, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
+		else if (c.state === 2) {
+			ctx.drawImage(atlas, 64, 64, cfg.s, cfg.s, c.cx, c.cy, cfg.s, cfg.s);
 		}
 		//is ?
-		else if(this.cell[dx][dy].state == 3){
-			_canvasContext.drawImage(atlas, 96, 64, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
+		else if (c.state === 3) {
+			ctx.drawImage(atlas, 96, 64, cfg.s, cfg.s, c.cx, c.cy, cfg.s, cfg.s);
 		}
 		//is mine
-		else if(this.cell[dx][dy].mine){
-			_canvasContext.drawImage(atlas, 0, 64, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
+		else if (c.mine) {
+			drawSquare(c.cx, c.cy, {
+				text: '☢',
+				txColor: '#000',
+				bgColor: '#ff8'
+			});
 		}
 		//is number
-		else if(this.cell[dx][dy].state == 0){
-			switch (this.cell[dx][dy].minesNear){
-			case 0:
-				_canvasContext.fillStyle = "#eee"
-				_canvasContext.fillRect(this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 1:
-				_canvasContext.drawImage(atlas, 0, 0, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 2:
-				_canvasContext.drawImage(atlas, 32, 0, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 3:
-				_canvasContext.drawImage(atlas, 64, 0, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 4:
-				_canvasContext.drawImage(atlas, 96, 0, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 5:
-				_canvasContext.drawImage(atlas, 0, 32, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 6:
-				_canvasContext.drawImage(atlas, 32, 32, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 7:
-				_canvasContext.drawImage(atlas, 64, 32, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			case 8:
-				_canvasContext.drawImage(atlas, 96, 32, 32, 32, this.cell[dx][dy].cx, this.cell[dx][dy].cy, 32, 32);
-				break;
-			default:
-				_canvasContext.drawImage(qImg, this.cell[dx][dy].cx, this.cell[dx][dy].cy);
-				break;
-			};
+		else if (c.state === 0) {
+			drawSquare(c.cx, c.cy, {
+				text: c.minesNear,
+				txColor: cfg.mt[c.minesNear]
+			});
+			// drawSquare(c.cx, c.cy, , );
 		}
 	};
-	this.flip = function(i, j) {
-		for(var a = Math.max(i-1, 0); a <= Math.min(i+1, col-1); a++){
-		for(var b = Math.max(j-1, 0); b <= Math.min(j+1, row-1); b++){
-			if(this.cell[a][b].state == 1 && !this.cell[a][b].mine){
-				this.cell[a][b].state = 0;
-				//this.covered--;
-				if(this.cell[a][b].minesNear == 0)
-					this.flip(a, b);
+
+	var flip = function(i, j) {
+		for (var a = Math.max(i - 1, 0); a <= Math.min(i + 1, col - 1); a++) {
+			for (var b = Math.max(j - 1, 0); b <= Math.min(j + 1, row - 1); b++) {
+				if (cell[a][b].state === 1 && !cell[a][b].mine) {
+					cell[a][b].state = 0;
+					if (cell[a][b].minesNear === 0)
+						flip(a, b);
+				}
 			}
-		}}
+		}
 	};
-	
-	//this.mouseMove = function() {
-	//	var coordX = Math.floor((event.pageX - _canvas.offsetLeft - paddX)/32);
-	//	var coordY = Math.floor((event.pageY - _canvas.offsetTop  - paddY)/32);
-	//	
-	//	if(coordX >= 0 && coordY >= 0 && coordX < col && coordY < row){
-	//			console.log(this.cell[coordX][coordY].state + " ga " + _canvasContext.globalAlpha);
-	//		
-	//			_canvasContext.globalAlpha = 0.5;
-	//			console.log(" ga " + _canvasContext.globalAlpha);
-	//			this.drawCell(coordX, coordY);
-	//			_canvasContext.globalAlpha = 1.0;
-	//	}
-	//};
-	
-	
-	this.mouse1 = function(e){
-	if(!end){
-		var coordX = Math.floor((e.pageX - _canvas.offsetLeft - paddX)/32);
-		var coordY = Math.floor((e.pageY - _canvas.offsetTop  - paddY)/32);
-		
-		//console.log("x " + coordX + " y " + coordY + " offsetLeft " + _canvas.offsetLeft + " offsetTop " + _canvas.offsetTop + " eX " + e.pageX + " evX " + (e.pageX - _canvas.offsetLeft - paddX));
-		if(coordX >= 0 && coordY >= 0 && coordX < col && coordY < row){
-				//console.log("clicky");
-				if(this.cell[coordX][coordY].state == 1){	
-					this.cell[coordX][coordY].state = 0;
-					//this.covered--;					
-					if(this.cell[coordX][coordY].mine){
-						//console.log("ouch, you die");
-						this.youDie();
-						this.drawCell(coordX, coordY);
+
+	canvas.addEventListener('click', function(e) {
+		if (!end) {
+			var coordX = Math.floor((e.pageX - canvas.offsetLeft - paddX) / cfg.s);
+			var coordY = Math.floor((e.pageY - canvas.offsetTop - paddY) / cfg.s);
+
+			if (coordX >= 0 && coordY >= 0 && coordX < col && coordY < row) {
+				if (cell[coordX][coordY].state === 1) {
+					cell[coordX][coordY].state = 0;
+					if (cell[coordX][coordY].mine) {
+						youDie();
+						drawCell(cell[coordX][coordY]);
+					} else if (cell[coordX][coordY].minesNear === 0) { //zero mines
+						flip(coordX, coordY);
+						drawBoard();
+					} else {
+						cell[coordX][coordY].state = 0;
+						//covered--;
+
+						drawCell(cell[coordX][coordY]);
 					}
-					else if(this.cell[coordX][coordY].minesNear == 0){//zero mines
-						this.flip(coordX, coordY);
-						this.drawBoard();
-					}
-					else {
-						this.cell[coordX][coordY].state = 0;
-						//this.covered--;
-						
-						this.drawCell(coordX, coordY);
-					}
-					this.tryWin();
+					tryWin();
 				}
+			}
+		} else {
+			ini();
 		}
-    }
-	else {
-		ini();
-	}
-	};
-	this.mouse2 = function(e){
-	if(!end){
-		var coordX = Math.floor((e.pageX - _canvas.offsetLeft - paddX)/32);
-		var coordY = Math.floor((e.pageY - _canvas.offsetTop - paddY)/32);
-		
-		if(coordX >= 0 && coordY >= 0 && coordX < col && coordY < row){
-		//is hidden set to flag
-		if(this.cell[coordX][coordY].state == 1){
-			//console.log("1 " + this.cell[coordX][coordY].state);
-			this.cell[coordX][coordY].state = 2;
-			this.drawCell(coordX, coordY);
-			
-			flaggedMines++;
-			document.getElementById("mines").innerHTML = "Mines " + (mines-flaggedMines);
-			
-			//if(flaggedMines == mines){
-			//	console.log("try");
-			//	this.tryWin();
-			//}
-		}
-		//is flag set to ?
-		else if(this.cell[coordX][coordY].state == 2){
-			//console.log("2 " + this.cell[coordX][coordY].state);
-			this.cell[coordX][coordY].state = 3;
-			this.drawCell(coordX, coordY);
-			
-			flaggedMines--;
-			document.getElementById("mines").innerHTML = "Mines " + (mines-flaggedMines);
-		}
-		//is ? set to hidden
-		else if(this.cell[coordX][coordY].state == 3){
-			//console.log("3 " + this.cell[coordX][coordY].state);
-			this.cell[coordX][coordY].state = 1;
-			this.drawCell(coordX, coordY);
-		}
-		
-		//console.log("mouse2 x " + coordX + " y " + coordY + " state " + this.cell[coordX][coordY].state);	
-		
-		}
-	}
-	else {
-		ini();
-	}
-	};
-	this.tryWin = function(){
-		for(var i = 0; i < col; i++)
-		for(var l = 0; l < row; l++){
-				if(this.cell[i][l].state == 0)
-						uncovered++;
-		}
-		if((col*row-uncovered) == mines){
-		for(i = 0; i < col; i++)
-		for(l = 0; l < row; l++){
-				if(this.cell[i][l].state == 2 && !this.cell[i][l].mine)
-					return false;
+	});
+
+	canvas.addEventListener('contextmenu', function(e) {
+		e.preventDefault();
+		if (!end) {
+			var coordX = Math.floor((e.pageX - canvas.offsetLeft - paddX) / cfg.s);
+			var coordY = Math.floor((e.pageY - canvas.offsetTop - paddY) / cfg.s);
+
+			if (coordX >= 0 && coordY >= 0 && coordX < col && coordY < row) {
+				//is hidden set to flag
+				if (cell[coordX][coordY].state === 1) {
+					cell[coordX][coordY].state = 2;
+					drawCell(cell[coordX][coordY]);
+
+					flaggedMines++;
+					document.getElementById('mines').innerHTML = 'Mines ' + (mines - flaggedMines);
 				}
-				this.win();
+				//is flag set to ?
+				else if (cell[coordX][coordY].state === 2) {
+					cell[coordX][coordY].state = 3;
+					drawCell(cell[coordX][coordY]);
+
+					flaggedMines--;
+					document.getElementById('mines').innerHTML = 'Mines ' + (mines - flaggedMines);
+				}
+				//is ? set to hidden
+				else if (cell[coordX][coordY].state === 3) {
+					cell[coordX][coordY].state = 1;
+					drawCell(cell[coordX][coordY]);
+				}
+			}
+		} else {
+			ini();
 		}
-		else {
-				uncovered = 0;
-				return false;
+	});
+
+	var tryWin = function() {
+		for (var i = 0; i < col; i++)
+			for (var l = 0; l < row; l++) {
+				if (cell[i][l].state === 0)
+					uncovered++;
+			}
+		if ((col * row - uncovered) === mines) {
+			for (i = 0; i < col; i++)
+				for (l = 0; l < row; l++) {
+					if (cell[i][l].state === 2 && !cell[i][l].mine)
+						return false;
+				}
+			win();
+		} else {
+			uncovered = 0;
+			return false;
 		}
 	};
-	this.win = function(){
-		console.log("HAHA you win!");
-		for(i = 0; i < col; i++)
-		for(j = 0; j < row; j++){
-			this.cell[i][j].state = 0;
-		}
-		this.drawBoard();
+
+	var win = function() {
+		console.log('HAHA you win!');
+		for (i = 0; i < col; i++)
+			for (j = 0; j < row; j++) {
+				cell[i][j].state = 0;
+			}
+		drawBoard();
 		end = 1;
 		startTime = null;
-		document.getElementById("mines").innerHTML = "Mines 0";
-		//alert("You win asshole!! Click on the board to play some more.")
+		document.getElementById('mines').innerHTML = 'Mines 0';
+		//alert('You win asshole!! Click on the board to play some more.')
 	};
-	this.youDie = function (){
-		console.log("HAHA you dead!");
-		for(i = 0; i < col; i++)
-		for(j = 0; j < row; j++){
-			this.cell[i][j].state = 0;
-		}
-		this.drawBoard();
+
+	var youDie = function() {
+		console.log('HAHA you dead!');
+		for (i = 0; i < col; i++)
+			for (j = 0; j < row; j++) {
+				cell[i][j].state = 0;
+			}
+		drawBoard();
 		end = 1;
 		startTime = null;
-		//alert("You lose asshole!! Click on the board to play some more.")
+		//alert('You lose asshole!! Click on the board to play some more.')
 	};
-};
+
+	var drawBoard = function() {
+		//clear canvas
+		//canvas.width = canvas.width
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		ctx.strokeStyle = '#aaa';
+		ctx.strokeRect(paddX - 4, paddY - 4, canvas.width - paddX * 2 + 8, canvas.height - paddY * 2 + 8);
+
+		for (i = 0; i < col; i++)
+			for (j = 0; j < row; j++) {
+				drawCell(cell[i][j]);
+			}
+	};
+
+	b.drawBoard = drawBoard;
+
+	b.ini = function() {
+		flaggedMines = 0;
+		end = 0;
+		uncovered = 0;
+		paddX = 0;
+		paddY = 0;
+
+		col = cfg.cd.col;
+		row = cfg.cd.row;
+		mines = cfg.cd.mines;
+
+		iniCells();
+		randMines();
+		countMines();
+		drawBoard();
+		document.getElementById('mines').innerHTML = 'Mines ' + (mines - flaggedMines);
+	};
+
+	return b;
+}());
+
 //img
 var atlas = new Image();
-atlas.src = "images/atlas default.png";
-//atlas.onload = Board.drawBoard();
-var curTheme = 0;
-var theme = function(){
-		switch(curTheme){
-				case 0:
-						atlas.src = "images/atlas white.png";
-						curTheme = 1;
-						document.getElementById("theme").value = "Whitey";
-						Board.drawBoard();			
-						break;
-				case 1:
-						atlas.src = "images/atlas red.png";
-						curTheme = 2;
-						document.getElementById("theme").value = "Red";
-						Board.drawBoard();
-						break;
-				case 2:
-						atlas.src = "images/atlas default.png";
-						curTheme = 0;
-						document.getElementById("theme").value = "Darc";
-						Board.drawBoard();
-						break;
-		}
+atlas.addEventListener('load', function() {
+	board.drawBoard();
+});
+atlas.src = 'images/atlas default.png';
+
+var theme = function() {
+	if (cfg.ti + 1 >= cfg.t.length) {
+		cfg.ti = 0;
+	} else {
+		cfg.ti++;
+	}
+	cfg.ct = cfg.t[cfg.ti];
+	document.getElementById('theme').value = cfg.ct.title;
+
+
+	// switch (curTheme) {
+	// 	case 0:
+	// 		curTheme = 1;
+	// 		document.getElementById('theme').value = 'Whitey';
+	// 		atlas.src = 'images/atlas white.png';
+	// 		break;
+	// 	case 1:
+	// 		curTheme = 2;
+	// 		document.getElementById('theme').value = 'Red';
+	// 		atlas.src = 'images/atlas red.png';
+	// 		break;
+	// 	case 2:
+	// 		curTheme = 0;
+	// 		document.getElementById('theme').value = 'Darc';
+	// 		atlas.src = 'images/atlas default.png';
+	// 		break;
+	// }
 };
 
 var startTime = 0;
-var time = function (){
-if(startTime){	
-	var cTime = new Date().getTime();
-	var diff = (cTime - startTime)/1000;
-	var min = "0"+String(Math.floor(diff/60));
-	var sec = "0"+String(Math.floor(diff%60));
-	
-	document.getElementById("time").innerHTML = "<span>" + "Time: " + min.substring(min.length - 2) + ":" + sec.substring(sec.length - 2) + "</span>";
-	setTimeout(time, 1000);
-}
+var time = function() {
+	if (startTime) {
+		var cTime = Date.now();
+		var diff = (cTime - startTime) / 1000;
+		var min = '0' + String(Math.floor(diff / 60));
+		var sec = '0' + String(Math.floor(diff % 60));
+
+		document.getElementById('time').innerHTML = '<div>' + 'Time: ' + min.substring(min.length - 2) + ':' + sec.substring(
+			sec.length - 2) + '</div>';
+		setTimeout(time, 1000);
+	}
 };
 
-var difficulty = 0;
-var diff = function() {
-		switch(difficulty){
-				case 0:
-						document.getElementById("diff").value = "Medium";
-						difficulty = 1;						
-						_canvas.width = 520;
-						_canvas.height = 520
-						ini();
-						break;
-				case 1:
-						document.getElementById("diff").value = "Expert";
-						difficulty = 2;
-						_canvas.width = 968;
-						_canvas.height = 520;
-						ini();
-						break;
-				case 2:
-						document.getElementById("diff").value = "Epic";
-						difficulty = 3;
-						_canvas.width = 968;
-						_canvas.height = 968;
-						ini();
-						break;
-				case 3:
-						document.getElementById("diff").value = "Easy";
-						difficulty = 0;
-						_canvas.width = 320;
-						_canvas.height = 320;
-						ini();
-						break;
-		}
+var changeDifficulty = function() {
+	if (cfg.di + 1 >= cfg.d.length) {
+		cfg.di = 0;
+	} else {
+		cfg.di++;
+	}
+	cfg.cd = cfg.d[cfg.di];
+
+	document.getElementById('diff').value = cfg.cd.title;
+	canvas.width = cfg.s * cfg.cd.col;
+	canvas.height = cfg.s * cfg.cd.row;
+
+	ini();
 };
 
-var ini = function(){
-	Board = new board;
-	Board.ini();
-	
-	startTime = new Date().getTime();	
+var ini = function() {
+	cfg.cd = cfg.d[cfg.di];
+	cfg.ct = cfg.t[cfg.ti];
+	board.ini();
+
+	startTime = Date.now();
 	time();
-	
-	document.getElementById('canvas').onclick = function (e) {
-		Board.mouse1(e);
-		return false;
-	};
-	document.getElementById('canvas').oncontextmenu = function (e) {
-		Board.mouse2(e);
-		return false;
-	};
-	//document.getElementById('canvas').onmousemove = function () {
-	//	Board.mouseMove();
-	//	return false;
-	//}
 };
+
+ini();
+
+document.getElementById('restart').addEventListener('click', ini);
+document.getElementById('diff').addEventListener('click', changeDifficulty);
